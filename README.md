@@ -52,6 +52,10 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado lo siguiente:
 
 Proyecto desarrollado siguiendo la consigna y explicaciones de **TodoCode Academy**, al que agregué modificaciones y ajustes personales para mejorar su funcionalidad y adaptarlo a mi aprendizaje.
 
+## 🎥 Demostración del proyecto
+Puedes ver el sistema en funcionamiento aquí: [Ver video](https://drive.google.com/file/d/1cT-mwjQ_23sAmSas5OR0yzITshFIJRL1/view?usp=sharing)
+
+
 
 
 
