@@ -1,47 +1,92 @@
-# 🐶 Sistema de Gestión de Peluquería Canina
+# 🐕 Sistema de Gestión para Peluquería Canina - Proyecto Mejorado
 
-Este proyecto es una aplicación desarrollada en **Java 21** con **NetBeans 21**, utilizando **JPA con EclipseLink** para la persistencia de datos. Permite gestionar clientes, mascotas y turnos de una peluquería canina de manera eficiente.
+## 📌 Descripción
+Sistema completo para gestión de clientes y mascotas en una peluquería canina, desarrollado en **Java 21** con mejoras significativas sobre la versión base de TodoCode Academy.
 
-## 🚀 Tecnologías utilizadas
-- **Java 21**
-- **NetBeans 21**
-- **Maven** (Gestor de dependencias)
-- **JPA (EclipseLink)**
-- **MySQL**
-- **Swing** (Interfaz gráfica)
+## 🚀 Características Mejoradas
 
-## ⚠️ Requisitos previos
-Antes de ejecutar el proyecto, asegúrate de tener instalado lo siguiente:
-- **Java 21+**
-- **NetBeans 21** (Versiones anteriores pueden no cargar correctamente las imágenes)
-- **MySQL** instalado
-- **MySQL Connector/J 8.0.17** (Otras versiones pueden generar incompatibilidades)
-- Configurar la conexión en `persistence.xml`
+### 🔍 Filtros Avanzados
+- **Búsqueda por mascota**: Filtra registros por nombre de mascota
+- **Búsqueda por dueño**: Filtra registros por nombre del propietario
+- **Resaltado visual**: Filas con atención especial se marcan en gris
 
-## 📦 Instalación y ejecución
-1. **Clonar el repositorio:**
+### 🛡️ Validaciones Robustas
+- Validación de campos obligatorios
+- Restricciones de longitud para nombres, razas y colores
+- Validación de formatos para DNI y teléfono
+- Verificación de opciones (SI/NO) para campos booleanos
+
+### 🖼️ Interfaz Mejorada
+- Diseño visual renovado con imágenes personalizadas
+- Experiencia de usuario optimizada
+- Mensajes de confirmación y error contextuales
+
+## ⚙️ Tecnologías
+
+| Componente       | Tecnología           |
+|------------------|----------------------|
+| Lenguaje         | Java 21              |
+| IDE              | NetBeans 21          |
+| Persistencia     | JPA con EclipseLink  |
+| Base de datos    | MySQL 8.x            |
+| Interfaz gráfica | Swing                |
+| Gestor de builds | Maven                |
+
+## 📋 Requisitos
+
+1. **Java Development Kit 21+**
+2. **NetBeans 21** (versión obligatoria para compatibilidad con imágenes)
+3. **MySQL Server** con:
+   - Base de datos llamada `peluqueriacanina`
+   - Usuario con permisos (configurar en `persistence.xml`)
+4. **MySQL Connector/J 8.0.17**
+
+## 🛠️ Instalación
+
+1. Clonar repositorio:
    ```bash
    git clone https://github.com/cendra-n/JpaEclipselink-peluqueriaCanina.git
    ```
-2. **Configurar la base de datos:**
-   - Crear una base de datos vacía en MySQL llamada **`peluqueriacanina`**.
-   - Asegurarse de que el usuario y la contraseña de MySQL sean correctos en el archivo `persistence.xml`.
-3. **Abrir el proyecto en NetBeans:**
-   - Importarlo como un **proyecto Maven**.
-   - Verificar que se descarguen las dependencias.
-4. **Ejecutar la aplicación** desde la clase `Principal.java`.
 
-## 📷 Características del sistema
-✔️ **Interfaz gráfica amigable** creada con Swing.
-✔️ **Gestión de clientes y mascotas:** Agregar, modificar y visualizar registros.
-✔️ **Persistencia con JPA y EclipseLink.**
-✔️ **Base de datos MySQL**, con mapeo automático desde JPA.
+2. Configurar base de datos:
+   ```sql
+   CREATE DATABASE peluqueriacanina;
+   ```
 
-## 📌 Notas
-- El sistema mapea la base de datos desde cero, por lo que no es necesario importar estructuras manualmente.
-- En caso de errores de conexión, verificar que el servicio de MySQL esté en ejecución.
-- **NetBeans 21 es necesario para cargar correctamente las imágenes en la interfaz**.
+3. Configurar `persistence.xml`:
+   ```xml
+   <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/peluqueriacanina"/>
+   <property name="javax.persistence.jdbc.user" value="tu_usuario"/>
+   <property name="javax.persistence.jdbc.password" value="tu_contraseña"/>
+   ```
+
+4. Importar en NetBeans como proyecto Maven
+
+## ▶️ Ejecución
+
+1. Abrir la clase principal: `PeluqueriaCanina.java`
+2. Ejecutar como aplicación Java
+
+## 📚 Documentación
+
+El proyecto incluye:
+- **JavaDoc completo** para todas las clases
+- Comentarios detallados en código
+- Validaciones documentadas
 
 ## ✨ Créditos
-Proyecto desarrollado siguiendo la consigna y explicaciones de **TodoCode Academy**, al que agregué modificaciones y ajustes personales para mejorar su funcionalidad y adaptarlo a mi aprendizaje.
 
+Basado en el curso de **TodoCode Academy** con mejoras significativas:
+- Sistema de filtrado avanzado
+- Validaciones de formulario
+- Diseño de interfaz mejorado
+- Documentación profesional
+- Indicadores visuales para mascotas con necesidades especiales
+
+## 🆘 Soporte
+
+Para problemas técnicos:
+1. Verificar que MySQL esté corriendo
+2. Confirmar versión de NetBeans (21+)
+3. Revisar configuración en `persistence.xml`
+4. Validar que las dependencias Maven se descargaron correctamente
