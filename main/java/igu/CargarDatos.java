@@ -1,20 +1,21 @@
 package igu;
-
 import logica.Controladora;
 
 /**
- *
- * @author Nadia Cendra
- * 
+ * Clase que representa la interfaz gráfica para cargar datos de mascotas y sus dueños.
+ * Permite ingresar información como nombre de la mascota, raza, color, alergias, atención especial,
+ * datos del dueño y observaciones. Incluye funcionalidades para guardar, limpiar y volver al menú principal.
  */
 public class CargarDatos extends javax.swing.JFrame {
-    Controladora control = new Controladora(); //instancia de la clase controladora del package logica
+    /*
+     * Instancia de la clase Controladora para manejar la lógica de negocio
+     */
+    Controladora control = new Controladora(); 
         
     public CargarDatos() {
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -356,49 +357,59 @@ public class CargarDatos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Método que maneja el evento del botón Volver.
+     * Cierra la ventana actual y muestra la ventana Principal centrada en pantalla.
+     * @param evt Evento de acción del botón
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         //
-        this.dispose(); //cierra esta ventana actual
-        Principal prin = new Principal(); //nueva instancia de principal
-        prin.setVisible(true); //se muestra principal
-        prin.setLocationRelativeTo(null); //principal se muestra en el centro
-        //boton para volver
+        this.dispose(); 
+        Principal prin = new Principal(); 
+        prin.setVisible(true); 
+        prin.setLocationRelativeTo(null); 
+    
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    
+    /**
+     * Método que maneja el evento del botón Limpiar.
+     * Restablece todos los campos del formulario a sus valores iniciales.
+     * @param evt Evento de acción del botón
+     */
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // este boton limpia los datos cargados
-        txtNombreM.setText(" "); //pone un vacio en el campo name mascota
+        txtNombreM.setText(" "); 
         txtRaza.setText(" ");
         txtColor.setText(" ");
-        comboAlergico.setSelectedIndex(0); //setea el valor del combo box, lo vuelve a la posicion inicial
+        comboAlergico.setSelectedIndex(0); 
         comboAtencion.setSelectedIndex(0);
-        txtNombreD.setText(" "); //pone un vacio en el nombre del dueño
+        txtNombreD.setText(" "); 
         txtDniD.setText("");
         txtCelular.setText(" ");
-        areaObservacion.setText(" "); //pone en vacio el textArea
+        areaObservacion.setText(" "); 
         
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
+     
+    /**
+     * Método que maneja el evento del botón Guardar.
+     * Recoge los datos ingresados en los campos del formulario y los envía a la controladora
+     * para su procesamiento y almacenamiento. 
+     * @param evt Evento de acción del botón
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String nombreMas = txtNombreM.getText(); //nombre mascota
+        String nombreMas = txtNombreM.getText(); 
         String raza = txtRaza.getText();
         String color = txtColor.getText();
-        String alergico= (String) comboAlergico.getSelectedItem(); //el resultado lo castea y lo pasa a string antes de pasarlo a la variable
+        String alergico= (String) comboAlergico.getSelectedItem(); 
         String atencion = (String) comboAtencion.getSelectedItem();
         String nombreDue = txtNombreD.getText();//nombre dueño
         String dniDue = txtDniD.getText();
         String celular = txtCelular.getText();
         String observacion = areaObservacion.getText();
         
-        //todas estas variables auxiliares las pasamos como parametro 
          control.guardarDatos(nombreMas,raza,color,alergico,atencion, nombreDue, dniDue, celular, observacion);
          
     }//GEN-LAST:event_btnGuardarActionPerformed
 
- 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacion;

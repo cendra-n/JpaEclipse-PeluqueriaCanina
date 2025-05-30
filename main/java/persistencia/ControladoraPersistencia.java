@@ -1,9 +1,5 @@
 package persistencia;
 
-/**
- * * @author Nadia Cendra
- */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,31 +7,36 @@ import java.util.logging.Logger;
 import logica.Duenio;
 import logica.Mascota;
 
-/*para poder administrar todos los jpacontroler vamos a crear una controladora de persitencia, esta controladora va a 
-supervisar cada una de las instancias del jpaContoler que tengamos,(mascota y duenio).
-creamos la controladora y cuando llamemos a este new para crear una nueva instancia, en nuestros dueJpa y masJpa
-va a quedar lo que tenga que ver con el constructor personalizado(el extra que hicimos en las clases 
-MascotaJpaControler y duenioJpaControler) teniendo en cuenta la unidad de persitencia que aca se
-llama "peluqueriaJpaPU" nombre que pusimos como nombre en el primer input
-del archivo persitence.xml*/
-
+/**
+ * Controladora principal de persistencia que gestiona las operaciones con la base de datos.
+ * Actúa como intermediario entre los controladores JPA y la capa de lógica de negocio.
+ */
 public class ControladoraPersistencia {
-    DuenioJpaController dueJpa = new DuenioJpaController(); //instancia de la clase jpa de duenio
-    MascotaJpaController masJpa = new MascotaJpaController(); //instancia de la clase jpa de mascota
+    DuenioJpaController dueJpa = new DuenioJpaController();
+    MascotaJpaController masJpa = new MascotaJpaController();
 
+    /**
+     * Guarda un nuevo dueño y su mascota en la base de datos.
+     * @param duenio Objeto Duenio a persistir
+     * @param mascota Objeto Mascota a persistir
+     */
     public void guardar(Duenio duenio, Mascota mascota) {
-        //crear dueño en la BD
         dueJpa.create(duenio);
-        
-        //crear mascota en la BD
         masJpa.create(mascota);
     }
 
+    /**
+     * Obtiene todas las mascotas registradas en la base de datos.
+     * @return Lista de todas las mascotas
+     */
     public List<Mascota> traerListaMascota() {
-        
-        return masJpa.findMascotaEntities(); //retorno todos los objetos que estan en la entidad mascotas en este caso
+        return masJpa.findMascotaEntities();
     }
 
+    /**
+     * Elimina una mascota de la base de datos por su número de cliente.
+     * @param numCliente ID de la mascota a eliminar
+     */
     public void eliminarMascota(int numCliente) {
         try {
             masJpa.destroy(numCliente);
@@ -44,10 +45,19 @@ public class ControladoraPersistencia {
         }
     }
 
+    /**
+     * Busca una mascota específica por su número de cliente.
+     * @param numCliente ID de la mascota a buscar
+     * @return Mascota encontrada o null si no existe
+     */
     public Mascota buscarMascota(int numCliente) {
-      return  masJpa.findMascota(numCliente);
+        return masJpa.findMascota(numCliente);
     }
 
+    /**
+     * Actualiza los datos de una mascota existente.
+     * @param masco Objeto Mascota con los datos actualizados
+     */
     public void modificarMascota(Mascota masco) {
         try {
             masJpa.edit(masco);
@@ -55,23 +65,33 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    public Duenio traerDuenio(int idDuenio) { //me va a buscar el dueño mediante el id
-        return dueJpa.findDuenio(idDuenio); 
+
+    /**
+     * Busca un dueño por su ID.
+     * @param idDuenio ID del dueño a buscar
+     * @return Dueño encontrado o null si no existe
+     */
+    public Duenio traerDuenio(int idDuenio) {
+        return dueJpa.findDuenio(idDuenio);
     }
-    
-    
-    public void cambiarDuenio(Duenio duenio) {//editar dueño
+
+    /**
+     * Actualiza los datos de un dueño existente.
+     * @param duenio Objeto Duenio con los datos actualizados
+     */
+    public void cambiarDuenio(Duenio duenio) {
         try {
             dueJpa.edit(duenio);
         } catch (Exception ex) {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void cerrarConexion() { //base 11
-        if (masJpa != null && masJpa.getEntityManagerFactory().isOpen()) { //cerrar conexion con la bd
+
+    /**
+     * Cierra las conexiones activas con la base de datos.
+     */
+    public void cerrarConexion() {
+        if (masJpa != null && masJpa.getEntityManagerFactory().isOpen()) {
             masJpa.getEntityManagerFactory().close();
         }
 
@@ -79,5 +99,4 @@ public class ControladoraPersistencia {
             dueJpa.getEntityManagerFactory().close();
         }
     }
-
 }

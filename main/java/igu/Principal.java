@@ -1,21 +1,21 @@
 package igu;
-
 import javax.swing.JOptionPane;
 import persistencia.ControladoraPersistencia;
 
 /**
- *
- * @author Nadia Soledad Cendra
+ * Clase que representa la ventana principal de la aplicación de Peluquería Canina.
+ * Proporciona acceso a las funcionalidades principales: cargar datos, ver datos y salir del sistema.
  */
 public class Principal extends javax.swing.JFrame {
+     /**
+     * Instancia de ControladoraPersistencia para manejar la conexión con la base de datos
+     */
     ControladoraPersistencia controlPersis = new ControladoraPersistencia();
     
-    //este es el menu principal que se vera al arrancar la aplicacion
     public Principal() {
         initComponents();
     }
-
-    
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -197,33 +197,44 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     
-    
+    /**
+     * Método que maneja el evento del botón Cargar Datos.
+     * Cierra la ventana actual y abre la interfaz para cargar nuevos datos de mascotas.
+     * @param evt Evento de acción del botón
+     */
     private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
-        this.dispose(); //cierra esta ventana actual
-        CargarDatos pantalla = new CargarDatos(); //instancia de la clase cargar datos
-        pantalla.setVisible(true); //se muestra la pantalla
-        pantalla.setLocationRelativeTo(null); //la pantalla se abrirá en el medio, sin tener en cuenta ninguna posicion en particular
+        this.dispose(); 
+        CargarDatos pantalla = new CargarDatos(); 
+        pantalla.setVisible(true); 
+        pantalla.setLocationRelativeTo(null); 
       
     }//GEN-LAST:event_cargarDatosActionPerformed
-
+    
+    /**
+     * Método que maneja el evento del botón Ver Datos.
+     * Cierra la ventana actual y abre la interfaz para visualizar los datos existentes.
+     * @param evt Evento de acción del botón
+     */
     private void verDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDatosActionPerformed
         this.dispose();
         VerDatos ver = new VerDatos();
         ver.setVisible(true);
         ver.setLocationRelativeTo(null);
     }//GEN-LAST:event_verDatosActionPerformed
-
+    
+    /**
+     * Método que maneja el evento del botón Salir.
+     * Cierra la conexión con la base de datos y termina la ejecución de la aplicación.
+     * @param evt Evento de acción del botón
+     */
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         JOptionPane.showMessageDialog(null, "Cerrando peluquería canina ", "Cierre del programa", JOptionPane.INFORMATION_MESSAGE);
-        controlPersis.cerrarConexion(); // cerrar conexiones activas
-        System.exit(0); // salir del programa
+        controlPersis.cerrarConexion(); 
+        System.exit(0); 
     }//GEN-LAST:event_salirActionPerformed
-
-    
    
-
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cargarDatos;
     private javax.swing.JLabel imagenperrito;

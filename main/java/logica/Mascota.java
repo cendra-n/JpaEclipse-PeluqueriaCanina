@@ -8,15 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 
-/**
- *
- * Nadia Cendra
- */
 
-@Entity // mapea que esta clase sera tomada a futuro como tabla en BD
+
+@Entity 
 public class Mascota implements Serializable {
-    @Id //define el id la futura tabla
-    @GeneratedValue(strategy=GenerationType.IDENTITY)//se define la estrategia de creacion del id
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int numCliente;
     @Basic
     private String nombrePerro;
@@ -25,8 +22,8 @@ public class Mascota implements Serializable {
     private String alergico;
     private String atencionEspecial;
     private String observaciones;
-    @OneToOne //define la relacion
-    private Duenio unDuenio; //por ahora la relacion va a ser 1 a 1, entre duenio y mascota
+    @OneToOne 
+    private Duenio unDuenio; 
 
     public Mascota() {
     }

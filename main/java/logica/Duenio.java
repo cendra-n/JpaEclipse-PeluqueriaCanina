@@ -7,9 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * @author Nadia Cendra
- */
 
 @Entity
 public class Duenio implements Serializable {

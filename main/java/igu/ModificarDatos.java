@@ -1,24 +1,29 @@
 package igu;
-
 import javax.swing.JOptionPane;
 import logica.Controladora;
 import logica.Mascota;
 
 /**
- *
- * @author Nadia Cendra
- * 
+ * Clase que representa la interfaz gráfica para modificar datos de mascotas y sus dueños.
+ * Permite visualizar y editar información existente como nombre de la mascota, raza, color, alergias,
+ * atención especial, datos del dueño y observaciones. Incluye funcionalidades para guardar cambios,
+ * limpiar campos y volver al menú principal.
  */
 public class ModificarDatos extends javax.swing.JFrame {
+    /**
+     * Instancia de la clase Controladora para manejar la lógica de negocio
+     */
     Controladora control = null;
-     Mascota masco; //la declaro como global para poder usarla en guardar y cargarDatos
+     Mascota masco; 
     int numCliente;
-        
+     
+    /**
+     * Constructor que inicializa la ventana de modificación de datos
+     * @param numCliente Identificador único de la mascota cuyos datos se van a modificar
+     */
     public ModificarDatos(int numCliente) {
         control = new Controladora();
-        
         initComponents(); 
-        
         cargarDatos(numCliente);
     }
 
@@ -359,51 +364,58 @@ public class ModificarDatos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Método que maneja el evento del botón Volver.
+     * Cierra la ventana actual y muestra la ventana Principal centrada en pantalla.
+     * @param evt Evento de acción del botón
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        //
-        this.dispose(); //cierra esta ventana actual
-        Principal prin = new Principal(); //nueva instancia de principal
-        prin.setVisible(true); //se muestra principal
-        prin.setLocationRelativeTo(null); //principal se muestra en el centro
-        //boton para volver
+        this.dispose(); 
+        Principal prin = new Principal(); 
+        prin.setVisible(true); 
+        prin.setLocationRelativeTo(null); 
+        
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    
+      /**
+     * Método que maneja el evento del botón Limpiar.
+     * Restablece todos los campos del formulario a sus valores iniciales.
+     * @param evt Evento de acción del botón
+     */
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // este boton limpia los datos cargados
-        txtNombreM.setText(" "); //pone un vacio en el campo name mascota
+        txtNombreM.setText(" "); 
         txtRaza.setText(" ");
         txtColor.setText(" ");
-        comboAlergico.setSelectedIndex(0); //setea el valor del combo box, lo vuelve a la posicion inicial
+        comboAlergico.setSelectedIndex(0);
         comboAtencion.setSelectedIndex(0);
-        txtNombreD.setText(" "); //pone un vacio en el nombre del dueño
-        txtDniD.setText(" "); //dni dueño
+        txtNombreD.setText(" "); 
+        txtDniD.setText(" "); 
         txtCelular.setText(" ");
-        areaObservacion.setText(" "); //pone en vacio el textArea
+        areaObservacion.setText(" "); 
         
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
+     
+    /**
+     * Método que maneja el evento del botón Guardar Cambios.
+     * Recoge los datos modificados en los campos del formulario, los envía a la controladora
+     * para su actualización en la base de datos y muestra un mensaje de confirmación.
+     * @param evt Evento de acción del botón
+     */
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
-        //datos mascota
-        String nombreMas = txtNombreM.getText(); //nombre mascota
+        String nombreMas = txtNombreM.getText(); 
         String raza = txtRaza.getText();
         String color = txtColor.getText();
-        String alergico= (String) comboAlergico.getSelectedItem(); //el resultado lo castea y lo pasa a string antes de pasarlo a la variable
+        String alergico= (String) comboAlergico.getSelectedItem(); 
         String atencion = (String) comboAtencion.getSelectedItem();
         String observacion = areaObservacion.getText();
         
-        //datos dueño
-        String nombreDue = txtNombreD.getText();//nombre dueño
+        String nombreDue = txtNombreD.getText();
         String dniDuenio= txtDniD.getText();
         String celular = txtCelular.getText();
+       
+        control.modificarDatos(masco,nombreMas,raza,color,alergico,atencion, nombreDue,dniDuenio, celular, observacion);
         
-        
-        //metodo gral que va a modificar mascota pero también va a recibir los datos del dueño 
-         control.modificarDatos(masco,nombreMas,raza,color,alergico,atencion, nombreDue,dniDuenio, celular, observacion);
-        
-         //salio todo bien
-         JOptionPane.showMessageDialog(null, "La información fue Editada con éxito en la BD.", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "La información fue Editada con éxito en la BD.", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
@@ -441,7 +453,11 @@ public class ModificarDatos extends javax.swing.JFrame {
     private javax.swing.JLabel txtobservacion;
     private javax.swing.JLabel txtraza;
     // End of variables declaration//GEN-END:variables
-
+    
+    /**
+     * Método privado que carga los datos de una mascota en los campos del formulario
+     * @param numCliente Identificador único de la mascota cuyos datos se van a cargar
+     */
     private void cargarDatos(int numCliente) {
        this.masco = control.traerUnaMascota(numCliente);
         
@@ -453,14 +469,14 @@ public class ModificarDatos extends javax.swing.JFrame {
         txtCelular.setText(masco.getUnDuenio().getCelDuenio());
         areaObservacion.setText(masco.getObservaciones()); 
         
-        if(masco.getAlergico().equalsIgnoreCase("SI")){ // VALOR 0 ES EL GUION - del comboBox
+        if(masco.getAlergico().equalsIgnoreCase("SI")){ 
            comboAlergico.setSelectedIndex(1); 
         }
         else{
             comboAlergico.setSelectedIndex(2); 
         }
             
-        if(masco.getAtencionEspecial().equalsIgnoreCase("SI")){ // VALOR 0 ES EL GUION -
+        if(masco.getAtencionEspecial().equalsIgnoreCase("SI")){ 
            comboAtencion.setSelectedIndex(1);
         }
         else{

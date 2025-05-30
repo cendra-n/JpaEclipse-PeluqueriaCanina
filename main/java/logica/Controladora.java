@@ -1,6 +1,8 @@
 package logica;
 
 /**
+ * Clase que actúa como intermediaria entre la capa de persistencia y la interfaz gráfica.
+ * Centraliza la lógica de negocio y valida los datos antes de enviarlos a persistencia.
  * @author Nadia Cendra
  */
 
@@ -11,32 +13,33 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import validator.MascotaValidator;
 
-/*
-Esta clase tiene como función centralizar los métodos, es decir recibe las peticiones
-e irá pasando entre la persistencia y la interfaz gráfica
-según corresponda
- */
 
 public class Controladora {
-    ControladoraPersistencia controlPersis = new ControladoraPersistencia(); //instancia de la controladoraPersistencia
+    /**
+     * Instancia de ControladoraPersistencia para manejar operaciones con la base de datos
+     */
+    ControladoraPersistencia controlPersis = new ControladoraPersistencia(); 
     
-    //metodos para duenio
-    public void crearDuenio(Duenio due){
-      //aca se va a crer el metodo para logica vaya al guardar de la interfaz y este pase a la bd?
-    }
-
+    /**
+     * Guarda los datos de mascota y dueño en la base de datos después de validarlos.
+     * 
+     * @param nombreMas Nombre de la mascota
+     * @param raza Raza de la mascota
+     * @param color Color de la mascota
+     * @param alergico Indicador de alergias (SI/NO)
+     * @param atencion Indicador de atención especial (SI/NO)
+     * @param nombreDue Nombre del dueño
+     * @param dniDue DNI del dueño
+     * @param celular Número de celular del dueño
+     * @param observacion Observaciones adicionales
+     */
     public void guardarDatos(String nombreMas, String raza, String color, String alergico, String atencion, String nombreDue, String dniDue, String celular, String observacion) {
-      /*los valores recibidos los guardaremos en mascota y dueño según corresponda, para eso crearemos una instancia
-      de cada una de las clases, pero antes de guardar miramos que estos datos no esten vacios 
-        */
-      
-        //objeto dueño
+    
         Duenio duenio = new Duenio();
         duenio.setNombreDuenio(nombreDue);
         duenio.setDniDuenio(dniDue);
         duenio.setCelDuenio(celular);
 
-        //objeto mascota
         Mascota mascota= new Mascota();
         mascota.setNombrePerro(nombreMas);
         mascota.setRaza(raza);
@@ -46,34 +49,59 @@ public class Controladora {
         mascota.setObservaciones(observacion);
         mascota.setUnDuenio(duenio);
       
-       // Validamos ambos objetos antes de proceder al guardado en la BD
+      
         if (!DuenioValidator.validarDuenio(duenio) || !MascotaValidator.validarMascota(mascota)) {
             JOptionPane.showMessageDialog(null, "¡No cumple las reglas!\nRevise los datos ingresados.","Error de validación", JOptionPane.ERROR_MESSAGE);
         } else {
             System.out.println("Procedo al insert en la base de datos");
             // Aquí llamamos a la persistencia para guardar
             controlPersis.guardar(duenio, mascota);
-            
             JOptionPane.showMessageDialog(null, "La información fue guardada con éxito en la BD.", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
         }
       
       
     }
-
-    public List<Mascota> traerMascotas() { // se comunica con la persitencia y esta se comunica a su vez con los jpa controler que corresponda y traer de la base la info
+    
+   /**
+     * Obtiene la lista completa de mascotas desde la base de datos
+     * @return Lista de objetos Mascota
+     */
+    public List<Mascota> traerMascotas() {
        return controlPersis.traerListaMascota();
     }
 
+      /**
+     * Elimina una mascota de la base de datos según su número de cliente
+     * @param numCliente Identificador único de la mascota
+     */
     public void borrarMascota(int numCliente) {
        controlPersis.eliminarMascota(numCliente);
     }
 
+    /**
+     * Obtiene una mascota específica desde la base de datos
+     * @param numCliente Identificador único de la mascota
+     * @return Objeto Mascota encontrado
+     */
     public Mascota traerUnaMascota(int numCliente) {
        return controlPersis.buscarMascota(numCliente);
     }
-
+    
+       /**
+     * Modifica los datos de una mascota y su dueño en la base de datos
+     * 
+     * @param masco Objeto Mascota a modificar
+     * @param nombreMas Nuevo nombre de la mascota
+     * @param raza Nueva raza de la mascota
+     * @param color Nuevo color de la mascota
+     * @param alergico Nuevo indicador de alergias
+     * @param atencion Nuevo indicador de atención especial
+     * @param nombreDue Nuevo nombre del dueño
+     * @param dniDuenio Nuevo DNI del dueño
+     * @param celular Nuevo número de celular del dueño
+     * @param observacion Nuevas observaciones
+     */
     public void modificarDatos(Mascota masco, String nombreMas, String raza, String color, String alergico, String atencion, String nombreDue, String dniDuenio, String celular, String observacion) {
-       //seteo mascota
        masco.setNombrePerro(nombreMas);
        masco.setRaza(raza);
        masco.setColor(color);
@@ -81,24 +109,31 @@ public class Controladora {
        masco.setAlergico(alergico);
        masco.setAtencionEspecial(atencion);
      
-       controlPersis.modificarMascota(masco); //modificar mascota
-       
-       Duenio duenio = this.buscarDuenio(masco.getUnDuenio().getIdDuenio()); //lo llamo aca "**"2 ,
-       // ahora puedo setear los valores de duenio
+       controlPersis.modificarMascota(masco);
+       Duenio duenio = this.buscarDuenio(masco.getUnDuenio().getIdDuenio()); 
        duenio.setNombreDuenio(nombreDue);
        duenio.setDniDuenio(dniDuenio);
        duenio.setCelDuenio(celular);
-       
-       //modificar dueño
+     
        this.modificarDuenio(duenio);
        
-       
     }
-
-    private Duenio buscarDuenio(int idDuenio) { //tiene el id del duenio "**"1
+    
+    
+     /**
+     * Busca un dueño por su ID
+     * @param idDuenio Identificador único del dueño
+     * @return Objeto Duenio encontrado
+     */
+    private Duenio buscarDuenio(int idDuenio) { 
         return controlPersis.traerDuenio(idDuenio);
     }
 
+    
+    /**
+     * Modifica los datos de un dueño en la base de datos
+     * @param duenio Objeto Duenio con los datos actualizados
+     */
     private void modificarDuenio(Duenio duenio) {
         controlPersis.cambiarDuenio(duenio);
     }
